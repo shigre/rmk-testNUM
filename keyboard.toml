@@ -5,31 +5,35 @@ product_name = "RMK SihgNUM"
 vendor_id = 0x4c4b
 product_id = 0x4643
 manufacturer = "shigre"
-chip = "rp2040"
+chip = "nrf52840"
 
 [matrix]
 # Input and output pins are mandatory
-input_pins = ["PIN_6", "PIN_7", "PIN_8", "PIN_9"]
-output_pins = ["PIN_19", "PIN_20", "PIN_21"]
+input_pins = ["P0_31", "P0_29", "P0_02", "P1_15", "P1_13", "P1_11"]
+output_pins = ["P0_11", "P1_00", "P0_24", "P0_22"]
 # WARNING: Currently row2col/col2row is set in RMK's feature gate, configs here do nothing actually
 # row2col = true
 
 [layout]
-rows = 4
-cols = 3
+rows = 6
+cols = 4
 layers = 2
 keymap = [
     [
-        ["A", "B", "C"],
-        ["Kc1", "Kc2", "Kc3"],
-        ["LCtrl", "MO(1)", "LShift"],
-        ["OSL(1)", "LT(2, Kc9)", "LM(1, LShift | LGui)"]
+        ["Escape", "MO(1)", "Tab","Equal"],
+        ["NumLock", "KpSlash", "KpAsterisk","BackSpace"],
+        ["Kp7", "Kp8", "Kp9","KpMinus"],
+        ["Kp4","Kp5","Kp6","KpPlus"],
+        ["Kp1","Kp2","Kp3","KpEnter"],
+        ["Kp0","KpDot"]
     ],
     [
-        ["_", "TT(1)", "TG(2)"],
-        ["_", "_", "_"],
-        ["_", "_", "_"],
-        ["_", "_", "_"]
+        ["","","",""],
+        ["","","",""],
+        ["","","",""],
+        ["","","",""],
+        ["","","",""],
+        ["","","",""]
     ],
 ]
 
@@ -48,3 +52,20 @@ keymap = [
 [storage]
 # Storage feature is enabled by default
 # enabled = false
+# Ble configuration
+# To use the default configuration, ignore this section completely
+
+
+[ble]
+# Whether to enable BLE feature
+enabled = true
+# nRF52840's saadc pin for reading battery level, you can use a pin number or "vddh"
+battery_adc_pin = "vddh"
+# The voltage divider setting for saadc. 
+# For example, nice!nano have 806 + 2M resistors, the saadc measures voltage on 2M resistor, so the two values should be set to 2000 and 2806
+adc_divider_measured = 2000
+adc_divider_total = 2806
+# Pin that reads battery's charging state, `low-active` means the battery is charging when `charge_state.pin` is low
+charge_state = { pin = "PIN_1", low_active = true }
+# Output LED pin that blinks when the battery is low
+charge_led= { pin = "PIN_2", low_active = true }
